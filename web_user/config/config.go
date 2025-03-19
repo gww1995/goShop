@@ -44,5 +44,5 @@ type NacosConfig struct {
 	User      string `mapstructure:"user"`
 	Password  string `mapstructure:"password"`
 	DataId    string `mapstructure:"dataid"`
-	Group     string `mapstructureL:"group"`
+	Group     string `mapstructure:"group"`
 }

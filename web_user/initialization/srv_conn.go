@@ -2,6 +2,7 @@ package initialization
 
 import (
 	"fmt"
+	_ "github.com/mbobakov/grpc-consul-resolver" // It's important
 	"go.uber.org/zap"
 	"goShop/web_user/global"
 	"goShop/web_user/proto"
