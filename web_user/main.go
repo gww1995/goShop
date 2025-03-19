@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin/binding"
+	ut "github.com/go-playground/universal-translator"
+	"github.com/go-playground/validator/v10"
 	uuid2 "github.com/google/uuid"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
@@ -9,6 +12,7 @@ import (
 	"goShop/web_user/initialization"
 	"goShop/web_user/utils"
 	"goShop/web_user/utils/register/consul"
+	vaild "goShop/web_user/validator"
 	"os"
 	"os/signal"
 	"syscall"
@@ -27,12 +31,27 @@ func main() {
 
 	viper.AutomaticEnv()
 
-	debug := viper.GetBool("GOSHOP_DEBUG")
-	if !debug {
+	pro := viper.GetBool("GOSHOP_DEBUG")
+	if pro {
 		port, err := utils.GetFreePort()
 		if err != nil {
 			global.ServerConfig.Port = port
 		}
+	}
+
+	//初始化验证器的翻译
+	if err := initialization.InitTrans("zh"); err != nil {
+		panic(err)
+	}
+	//注册验证器
+	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
+		_ = v.RegisterValidation("mobile", vaild.ValidateMobile)
+		_ = v.RegisterTranslation("mobile", global.Trans, func(ut ut.Translator) error {
+			return ut.Add("mobile", "{0} 非法的手机号码!", true) // see universal-translator for details
+		}, func(ut ut.Translator, fe validator.FieldError) string {
+			t, _ := ut.T("mobile", fe.Field())
+			return t
+		})
 	}
 
 	client := consul.NewRegistryClient(global.ServerConfig.ConsulInfo.Host, global.ServerConfig.ConsulInfo.Port)

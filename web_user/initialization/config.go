@@ -60,6 +60,7 @@ func InitConfig() {
 	}
 
 	err = json.Unmarshal([]byte(config), &global.ServerConfig)
+	zap.S().Infof("nacos：%s", config)
 	if err != nil {
 		zap.S().Fatalf("读取 nacos 配置失败：%s", err.Error())
 		fmt.Println(&global.ServerConfig)

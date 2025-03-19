@@ -2,11 +2,9 @@ package api
 
 import (
 	"context"
-	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"github.com/go-redis/redis/v8"
 	"go.uber.org/zap"
 	"goShop/web_user/forms"
 	"goShop/web_user/global"
@@ -76,7 +74,7 @@ func HandleGrpcErrorToHttp(err error, c *gin.Context) {
 
 func GetUserList(ctx *gin.Context) {
 	claims, _ := ctx.Get("claims")
-	currentUser := claims.(*models.CustomClaims)
+	currentUser := claims.(*models.CustomClaims) //类型断言
 	zap.S().Infof("访问用户：%d", currentUser.ID)
 
 	pn := ctx.DefaultQuery("pn", "0")
@@ -200,25 +198,6 @@ func Register(c *gin.Context) {
 	if err := c.ShouldBind(&registerForm); err != nil {
 		HandleValidatorError(c, err)
 		return
-	}
-
-	//验证码
-	rdb := redis.NewClient(&redis.Options{
-		Addr: fmt.Sprintf("%s:%d", global.ServerConfig.RedisInfo.Host, global.ServerConfig.RedisInfo.Port),
-	})
-	value, err := rdb.Get(context.Background(), registerForm.Mobile).Result()
-	if err == redis.Nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"code": "验证码错误",
-		})
-		return
-	} else {
-		if value != registerForm.Code {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"code": "验证码错误",
-			})
-			return
-		}
 	}
 
 	user, err := global.UserSrvClient.CreateUser(context.Background(), &proto.CreateUserInfo{
