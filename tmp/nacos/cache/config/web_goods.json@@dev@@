@@ -1,0 +1,21 @@
+{
+  "host": "192.168.1.23",
+  "name": "web_goods",
+  "port": 8022,
+  "tags":["goods", "web"],
+  "goods_srv": {
+    "name": "srv_goods"
+  },
+  "jwt": {
+    "key": "5$!UEmvB#nRB@Iwab#Sy!zofKEOGLRtE"
+  },
+  "consul": {
+    "host": "192.168.1.23",
+    "port": 8500
+  },
+  "jaeger": {
+    "host": "192.168.1.23",
+    "port": 6831,
+    "name": "goshop"
+  }
+}
