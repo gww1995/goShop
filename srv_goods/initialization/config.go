@@ -20,11 +20,11 @@ func GetEnvInfo(env string) bool {
 
 func InitConfig() {
 	//从配置文件中读取出对应的配置
-	debug := GetEnvInfo("MXSHOP_DEBUG")
+	pro := GetEnvInfo("GOSHOP_DEBUG")
 	configFilePrefix := "config"
-	configFileName := fmt.Sprintf("goods_srv/%s-pro.yaml", configFilePrefix)
-	if debug {
-		configFileName = fmt.Sprintf("goods_srv/%s-debug.yaml", configFilePrefix)
+	configFileName := fmt.Sprintf("srv_goods/%s-pro.yaml", configFilePrefix)
+	if !pro {
+		configFileName = fmt.Sprintf("srv_goods/%s-debug.yaml", configFilePrefix)
 	}
 
 	v := viper.New()
@@ -66,16 +66,17 @@ func InitConfig() {
 
 	content, err := configClient.GetConfig(vo.ConfigParam{
 		DataId: global.NacosConfig.DataId,
-		Group:  global.NacosConfig.Group})
+		Group:  global.NacosConfig.Group,
+	})
 
 	if err != nil {
 		panic(err)
 	}
-	//fmt.Println(content) //字符串 - yaml
+	zap.S().Info(content) //字符串 - yaml
 	//想要将一个json字符串转换成struct，需要去设置这个struct的tag
 	err = json.Unmarshal([]byte(content), &global.ServerConfig)
 	if err != nil {
 		zap.S().Fatalf("读取nacos配置失败： %s", err.Error())
 	}
-	fmt.Println(&global.ServerConfig)
+	zap.S().Info(&global.ServerConfig)
 }
