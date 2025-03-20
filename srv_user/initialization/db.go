@@ -2,7 +2,7 @@ package initialization
 
 import (
 	"fmt"
-	"goShop/service_user/global"
+	"goShop/srv_user/global"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"

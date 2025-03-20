@@ -3,14 +3,13 @@ package initialization
 import (
 	"encoding/json"
 	"fmt"
+	"goShop/srv_goods/global"
 
 	"github.com/nacos-group/nacos-sdk-go/clients"
 	"github.com/nacos-group/nacos-sdk-go/common/constant"
 	"github.com/nacos-group/nacos-sdk-go/vo"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
-
-	"goShop/service_user/global"
 )
 
 func GetEnvInfo(env string) bool {
@@ -21,11 +20,11 @@ func GetEnvInfo(env string) bool {
 
 func InitConfig() {
 	//从配置文件中读取出对应的配置
-	pro := GetEnvInfo("MXSHOP_DEBUG")
+	debug := GetEnvInfo("MXSHOP_DEBUG")
 	configFilePrefix := "config"
-	configFileName := fmt.Sprintf("service_user/%s-pro.yaml", configFilePrefix)
-	if !pro {
-		configFileName = fmt.Sprintf("service_user/%s-debug.yaml", configFilePrefix)
+	configFileName := fmt.Sprintf("goods_srv/%s-pro.yaml", configFilePrefix)
+	if debug {
+		configFileName = fmt.Sprintf("goods_srv/%s-debug.yaml", configFilePrefix)
 	}
 
 	v := viper.New()
@@ -75,7 +74,6 @@ func InitConfig() {
 	//fmt.Println(content) //字符串 - yaml
 	//想要将一个json字符串转换成struct，需要去设置这个struct的tag
 	err = json.Unmarshal([]byte(content), &global.ServerConfig)
-	zap.S().Infof("nacosconfig: %s", content)
 	if err != nil {
 		zap.S().Fatalf("读取nacos配置失败： %s", err.Error())
 	}

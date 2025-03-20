@@ -1,7 +1,7 @@
 package global
 
 import (
-	"goShop/service_user/config"
+	"goShop/srv_user/config"
 	"gorm.io/gorm"
 )
 
