@@ -4,7 +4,7 @@
 // - protoc             v5.29.3
 // source: order.proto
 
-package proto
+package web_order
 
 import (
 	context "context"
@@ -20,14 +20,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Order_CartItemList_FullMethodName      = "/Order/CartItemList"
-	Order_CreateCartItem_FullMethodName    = "/Order/CreateCartItem"
-	Order_UpdateCartItem_FullMethodName    = "/Order/UpdateCartItem"
-	Order_DeleteCartItem_FullMethodName    = "/Order/DeleteCartItem"
-	Order_CreateOrder_FullMethodName       = "/Order/CreateOrder"
-	Order_OrderList_FullMethodName         = "/Order/OrderList"
-	Order_OrderDetail_FullMethodName       = "/Order/OrderDetail"
-	Order_UpdateOrderStatus_FullMethodName = "/Order/UpdateOrderStatus"
+	Order_CartItemList_FullMethodName      = "/web_order.Order/CartItemList"
+	Order_CreateCartItem_FullMethodName    = "/web_order.Order/CreateCartItem"
+	Order_UpdateCartItem_FullMethodName    = "/web_order.Order/UpdateCartItem"
+	Order_DeleteCartItem_FullMethodName    = "/web_order.Order/DeleteCartItem"
+	Order_CreateOrder_FullMethodName       = "/web_order.Order/CreateOrder"
+	Order_OrderList_FullMethodName         = "/web_order.Order/OrderList"
+	Order_OrderDetail_FullMethodName       = "/web_order.Order/OrderDetail"
+	Order_UpdateOrderStatus_FullMethodName = "/web_order.Order/UpdateOrderStatus"
 )
 
 // OrderClient is the client API for Order service.
@@ -351,7 +351,7 @@ func _Order_UpdateOrderStatus_Handler(srv interface{}, ctx context.Context, dec 
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Order_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "Order",
+	ServiceName: "web_order.Order",
 	HandlerType: (*OrderServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

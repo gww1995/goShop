@@ -19,11 +19,11 @@ func GetEnvInfo(env string) bool {
 }
 
 func InitConfig() {
-	debug := GetEnvInfo("MXSHOP_DEBUG")
+	pro := GetEnvInfo("GOSHOP_DEBUG")
 	configFilePrefix := "config"
-	configFileName := fmt.Sprintf("order-web/%s-pro.yaml", configFilePrefix)
-	if debug {
-		configFileName = fmt.Sprintf("order-web/%s-debug.yaml", configFilePrefix)
+	configFileName := fmt.Sprintf("web_order/%s-pro.yaml", configFilePrefix)
+	if !pro {
+		configFileName = fmt.Sprintf("web_order/%s-debug.yaml", configFilePrefix)
 	}
 
 	v := viper.New()

@@ -19,7 +19,7 @@ func List(ctx *gin.Context) {
 	userId, _ := ctx.Get("userId")
 	claims, _ := ctx.Get("claims")
 
-	request := proto.OrderFilterRequest{}
+	request := web_order.OrderFilterRequest{}
 
 	//如果是管理员用户则返回所有的订单
 	model := claims.(*models.CustomClaims)
@@ -89,7 +89,7 @@ func New(ctx *gin.Context) {
 		api.HandleValidatorError(ctx, err)
 	}
 	userId, _ := ctx.Get("userId")
-	rsp, err := global.OrderSrvClient.CreateOrder(context.WithValue(context.Background(), "ginContext", ctx), &proto.OrderRequest{
+	rsp, err := global.OrderSrvClient.CreateOrder(context.WithValue(context.Background(), "ginContext", ctx), &web_order.OrderRequest{
 		UserId:  int32(userId.(uint)),
 		Name:    orderForm.Name,
 		Mobile:  orderForm.Mobile,
@@ -155,7 +155,7 @@ func Detail(ctx *gin.Context) {
 	}
 
 	//如果是管理员用户则返回所有的订单
-	request := proto.OrderRequest{
+	request := web_order.OrderRequest{
 		Id: int32(i),
 	}
 	claims, _ := ctx.Get("claims")

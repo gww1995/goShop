@@ -23,7 +23,7 @@ func InitSrvConn() {
 		zap.S().Fatal("[InitSrvConn] 连接 【商品服务失败】")
 	}
 
-	global.GoodsSrvClient = proto.NewGoodsClient(goodsConn)
+	global.GoodsSrvClient = web_order.NewGoodsClient(goodsConn)
 
 	orderConn, err := grpc.Dial(
 		fmt.Sprintf("consul://%s:%d/%s?wait=14s", consulInfo.Host, consulInfo.Port, global.ServerConfig.OrderSrvInfo.Name),
@@ -35,7 +35,7 @@ func InitSrvConn() {
 		zap.S().Fatal("[InitSrvConn] 连接 【订单服务失败】")
 	}
 
-	global.OrderSrvClient = proto.NewOrderClient(orderConn)
+	global.OrderSrvClient = web_order.NewOrderClient(orderConn)
 
 	invConn, err := grpc.Dial(
 		fmt.Sprintf("consul://%s:%d/%s?wait=14s", consulInfo.Host, consulInfo.Port, global.ServerConfig.InventorySrvInfo.Name),
@@ -47,6 +47,6 @@ func InitSrvConn() {
 		zap.S().Fatal("[InitSrvConn] 连接 【库存服务失败】")
 	}
 
-	global.InventorySrvClient = proto.NewInventoryClient(invConn)
+	global.InventorySrvClient = web_order.NewInventoryClient(invConn)
 
 }

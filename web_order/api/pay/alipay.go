@@ -35,7 +35,7 @@ func Notify(ctx *gin.Context) {
 		return
 	}
 
-	_, err = global.OrderSrvClient.UpdateOrderStatus(context.Background(), &proto.OrderStatus{
+	_, err = global.OrderSrvClient.UpdateOrderStatus(context.Background(), &web_order.OrderStatus{
 		OrderSn: noti.OutTradeNo,
 		Status:  string(noti.TradeStatus),
 	})

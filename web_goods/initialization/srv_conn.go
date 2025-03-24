@@ -21,5 +21,5 @@ func InitSrvConn() {
 		zap.S().Fatalf("[InitSrvConn] 连接 【用户服务失败】%s", err)
 	}
 
-	global.GoodsSrvClient = proto.NewGoodsClient(userConn)
+	global.GoodsSrvClient = web_goods.NewGoodsClient(userConn)
 }

@@ -74,7 +74,7 @@ func HandleValidatorError(c *gin.Context, err error) {
 func List(ctx *gin.Context) {
 	fmt.Println("商品列表")
 	//商品的列表 pmin=abc, spring cloud, go-micro
-	request := &proto.GoodsFilterRequest{}
+	request := &web_goods.GoodsFilterRequest{}
 
 	priceMin := ctx.DefaultQuery("pmin", "0")
 	priceMinInt, _ := strconv.Atoi(priceMin)
@@ -177,7 +177,7 @@ func New(ctx *gin.Context) {
 		return
 	}
 	goodsClient := global.GoodsSrvClient
-	rsp, err := goodsClient.CreateGoods(context.Background(), &proto.CreateGoodsInfo{
+	rsp, err := goodsClient.CreateGoods(context.Background(), &web_goods.CreateGoodsInfo{
 		Name:            goodsForm.Name,
 		GoodsSn:         goodsForm.GoodsSn,
 		Stocks:          goodsForm.Stocks,
@@ -209,7 +209,7 @@ func Detail(ctx *gin.Context) {
 		return
 	}
 
-	r, err := global.GoodsSrvClient.GetGoodsDetail(context.WithValue(context.Background(), "ginContext", ctx), &proto.GoodInfoRequest{
+	r, err := global.GoodsSrvClient.GetGoodsDetail(context.WithValue(context.Background(), "ginContext", ctx), &web_goods.GoodInfoRequest{
 		Id: int32(i),
 	})
 	if err != nil {
@@ -250,7 +250,7 @@ func Delete(ctx *gin.Context) {
 		ctx.Status(http.StatusNotFound)
 		return
 	}
-	_, err = global.GoodsSrvClient.DeleteGoods(context.Background(), &proto.DeleteGoodsInfo{Id: int32(i)})
+	_, err = global.GoodsSrvClient.DeleteGoods(context.Background(), &web_goods.DeleteGoodsInfo{Id: int32(i)})
 	if err != nil {
 		HandleGrpcErrorToHttp(err, ctx)
 		return
@@ -281,7 +281,7 @@ func UpdateStatus(ctx *gin.Context) {
 
 	id := ctx.Param("id")
 	i, err := strconv.ParseInt(id, 10, 32)
-	if _, err = global.GoodsSrvClient.UpdateGoods(context.Background(), &proto.CreateGoodsInfo{
+	if _, err = global.GoodsSrvClient.UpdateGoods(context.Background(), &web_goods.CreateGoodsInfo{
 		Id:     int32(i),
 		IsHot:  *goodsStatusForm.IsHot,
 		IsNew:  *goodsStatusForm.IsNew,
@@ -304,7 +304,7 @@ func Update(ctx *gin.Context) {
 
 	id := ctx.Param("id")
 	i, err := strconv.ParseInt(id, 10, 32)
-	if _, err = global.GoodsSrvClient.UpdateGoods(context.Background(), &proto.CreateGoodsInfo{
+	if _, err = global.GoodsSrvClient.UpdateGoods(context.Background(), &web_goods.CreateGoodsInfo{
 		Id:              int32(i),
 		Name:            goodsForm.Name,
 		GoodsSn:         goodsForm.GoodsSn,

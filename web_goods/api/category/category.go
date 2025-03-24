@@ -41,7 +41,7 @@ func Detail(ctx *gin.Context) {
 
 	reMap := make(map[string]interface{})
 	subCategorys := make([]interface{}, 0)
-	if r, err := global.GoodsSrvClient.GetSubCategory(context.Background(), &proto.CategoryListRequest{
+	if r, err := global.GoodsSrvClient.GetSubCategory(context.Background(), &web_goods.CategoryListRequest{
 		Id: int32(i),
 	}); err != nil {
 		api.HandleGrpcErrorToHttp(err, ctx)
@@ -76,7 +76,7 @@ func New(ctx *gin.Context) {
 		return
 	}
 
-	rsp, err := global.GoodsSrvClient.CreateCategory(context.Background(), &proto.CategoryInfoRequest{
+	rsp, err := global.GoodsSrvClient.CreateCategory(context.Background(), &web_goods.CategoryInfoRequest{
 		Name:           categoryForm.Name,
 		IsTab:          *categoryForm.IsTab,
 		Level:          categoryForm.Level,
@@ -108,7 +108,7 @@ func Delete(ctx *gin.Context) {
 	//1. 先查询出该分类写的所有子分类
 	//2. 将所有的分类全部逻辑删除
 	//3. 将该分类下的所有的商品逻辑删除
-	_, err = global.GoodsSrvClient.DeleteCategory(context.Background(), &proto.DeleteCategoryRequest{Id: int32(i)})
+	_, err = global.GoodsSrvClient.DeleteCategory(context.Background(), &web_goods.DeleteCategoryRequest{Id: int32(i)})
 	if err != nil {
 		api.HandleGrpcErrorToHttp(err, ctx)
 		return
@@ -131,7 +131,7 @@ func Update(ctx *gin.Context) {
 		return
 	}
 
-	request := &proto.CategoryInfoRequest{
+	request := &web_goods.CategoryInfoRequest{
 		Id:   int32(i),
 		Name: categoryForm.Name,
 	}

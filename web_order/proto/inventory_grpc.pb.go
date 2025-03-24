@@ -4,7 +4,7 @@
 // - protoc             v5.29.3
 // source: inventory.proto
 
-package proto
+package web_order
 
 import (
 	context "context"
@@ -20,10 +20,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Inventory_SetInv_FullMethodName    = "/Inventory/SetInv"
-	Inventory_InvDetail_FullMethodName = "/Inventory/InvDetail"
-	Inventory_Sell_FullMethodName      = "/Inventory/Sell"
-	Inventory_Reback_FullMethodName    = "/Inventory/Reback"
+	Inventory_SetInv_FullMethodName    = "/web_order.Inventory/SetInv"
+	Inventory_InvDetail_FullMethodName = "/web_order.Inventory/InvDetail"
+	Inventory_Sell_FullMethodName      = "/web_order.Inventory/Sell"
+	Inventory_Reback_FullMethodName    = "/web_order.Inventory/Reback"
 )
 
 // InventoryClient is the client API for Inventory service.
@@ -211,7 +211,7 @@ func _Inventory_Reback_Handler(srv interface{}, ctx context.Context, dec func(in
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Inventory_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "Inventory",
+	ServiceName: "web_order.Inventory",
 	HandlerType: (*InventoryServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

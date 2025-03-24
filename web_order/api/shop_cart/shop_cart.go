@@ -16,7 +16,7 @@ import (
 func List(ctx *gin.Context) {
 	//获取购物车商品
 	userId, _ := ctx.Get("userId")
-	rsp, err := global.OrderSrvClient.CartItemList(context.Background(), &proto.UserInfo{
+	rsp, err := global.OrderSrvClient.CartItemList(context.Background(), &web_order.UserInfo{
 		Id: int32(userId.(uint)),
 	})
 	if err != nil {
@@ -38,7 +38,7 @@ func List(ctx *gin.Context) {
 	}
 
 	//请求商品服务获取商品信息
-	goodsRsp, err := global.GoodsSrvClient.BatchGetGoods(context.Background(), &proto.BatchGoodsIdInfo{
+	goodsRsp, err := global.GoodsSrvClient.BatchGetGoods(context.Background(), &web_order.BatchGoodsIdInfo{
 		Id: ids,
 	})
 	if err != nil {
@@ -97,7 +97,7 @@ func New(ctx *gin.Context) {
 	}
 
 	//为了严谨性，添加商品到购物车之前，记得检查一下商品是否存在
-	_, err := global.GoodsSrvClient.GetGoodsDetail(context.Background(), &proto.GoodInfoRequest{
+	_, err := global.GoodsSrvClient.GetGoodsDetail(context.Background(), &web_order.GoodInfoRequest{
 		Id: itemForm.GoodsId,
 	})
 	if err != nil {
@@ -107,7 +107,7 @@ func New(ctx *gin.Context) {
 	}
 
 	//如果现在添加到购物车的数量和库存的数量不一致
-	invRsp, err := global.InventorySrvClient.InvDetail(context.Background(), &proto.GoodsInvInfo{
+	invRsp, err := global.InventorySrvClient.InvDetail(context.Background(), &web_order.GoodsInvInfo{
 		GoodsId: itemForm.GoodsId,
 	})
 	if err != nil {
@@ -123,7 +123,7 @@ func New(ctx *gin.Context) {
 	}
 
 	userId, _ := ctx.Get("userId")
-	rsp, err := global.OrderSrvClient.CreateCartItem(context.Background(), &proto.CartItemRequest{
+	rsp, err := global.OrderSrvClient.CreateCartItem(context.Background(), &web_order.CartItemRequest{
 		GoodsId: itemForm.GoodsId,
 		UserId:  int32(userId.(uint)),
 		Nums:    itemForm.Nums,
@@ -158,7 +158,7 @@ func Update(ctx *gin.Context) {
 	}
 
 	userId, _ := ctx.Get("userId")
-	request := proto.CartItemRequest{
+	request := web_order.CartItemRequest{
 		UserId:  int32(userId.(uint)),
 		GoodsId: int32(i),
 		Nums:    itemForm.Nums,
@@ -188,7 +188,7 @@ func Delete(ctx *gin.Context) {
 	}
 
 	userId, _ := ctx.Get("userId")
-	_, err = global.OrderSrvClient.DeleteCartItem(context.Background(), &proto.CartItemRequest{
+	_, err = global.OrderSrvClient.DeleteCartItem(context.Background(), &web_order.CartItemRequest{
 		UserId:  int32(userId.(uint)),
 		GoodsId: int32(i),
 	})
