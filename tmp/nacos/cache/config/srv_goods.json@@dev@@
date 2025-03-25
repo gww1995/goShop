@@ -1,0 +1,16 @@
+{
+    "name":"srv_goods",
+    "host":"192.168.1.7",
+    "tags":["good", "srv"],
+    "mysql":{
+        "db":"goshop_srv_goods",
+        "host":"192.168.1.23",
+        "port":3306,
+        "user":"root",
+        "password":"root"
+    },
+    "consul":{
+        "host":"192.168.1.23",
+        "port":8500
+    }
+}

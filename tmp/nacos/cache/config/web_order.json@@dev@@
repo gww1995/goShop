@@ -1,10 +1,16 @@
 {
   "host": "192.168.1.7",
-  "name": "web_goods",
+  "name": "web_order",
   "port": 8023,
-  "tags":["goods", "web"],
-  "srv_goods": {
+  "tags":["order", "web"],
+  "goods_srv": {
     "name": "srv_goods"
+  },
+  "order_srv": {
+    "name": "srv_order"
+  },
+  "inventory_srv": {
+    "name": "srv_inventory"
   },
   "jwt": {
     "key": "5$!UEmvB#nRB@Iwab#Sy!zofKEOGLRtE"
@@ -12,10 +18,5 @@
   "consul": {
     "host": "192.168.1.23",
     "port": 8500
-  },
-  "jaeger": {
-    "host": "192.168.1.23",
-    "port": 6831,
-    "name": "goshop"
   }
 }

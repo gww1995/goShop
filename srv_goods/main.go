@@ -23,14 +23,14 @@ import (
 )
 
 func main() {
-	IP := flag.String("ip", "127.0.0.1", "ip地址")
-	Port := flag.Int("port", 0, "端口号")
+	IP := flag.String("ip", "192.168.1.7", "ip地址")
+	Port := flag.Int("port", 50054, "端口号")
 
 	//初始化
 	initialization.InitLogger()
 	initialization.InitConfig()
 	initialization.InitDB()
-	initialization.InitEs()
+	//initialization.InitEs()
 	zap.S().Info(global.ServerConfig)
 
 	flag.Parse()

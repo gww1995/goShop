@@ -38,8 +38,8 @@ func main() {
 
 	viper.AutomaticEnv()
 	//如果是本地开发环境端口号固定，线上环境启动获取端口号
-	debug := viper.GetBool("MXSHOP_DEBUG")
-	if !debug {
+	pro := viper.GetBool("GOSHOP_DEBUG")
+	if !pro {
 		port, err := utils.GetFreePort()
 		if err == nil {
 			global.ServerConfig.Port = port

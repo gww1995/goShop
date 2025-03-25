@@ -1,0 +1,16 @@
+{
+  "name": "srv_inventory",
+  "host": "192.168.1.7",
+  "tags":["inventory", "srv"],
+  "mysql": {
+    "host": "192.168.1.23",
+    "port": 3306,
+    "user": "root",
+    "password": "root",
+    "db": "goshop_srv_inventory"
+  },
+  "consul": {
+    "host": "192.168.1.23",
+    "port": 8500
+  }
+}
